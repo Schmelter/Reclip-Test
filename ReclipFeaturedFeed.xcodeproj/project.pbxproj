@@ -42,6 +42,8 @@
 		7B62CFE429BD766B0056511C /* ServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B62CFE329BD766B0056511C /* ServiceError.swift */; };
 		7B62CFE629BD79AD0056511C /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B62CFE529BD79AD0056511C /* ViewState.swift */; };
 		7B62CFE929BD79FA0056511C /* RequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B62CFE829BD79FA0056511C /* RequestDelegate.swift */; };
+		7B62CFEB29BD7F1E0056511C /* FeaturedFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B62CFEA29BD7F1E0056511C /* FeaturedFeedCell.swift */; };
+		7B62CFED29BD7FF60056511C /* UITableView+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B62CFEC29BD7FF60056511C /* UITableView+Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +95,8 @@
 		7B62CFE329BD766B0056511C /* ServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceError.swift; sourceTree = "<group>"; };
 		7B62CFE529BD79AD0056511C /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
 		7B62CFE829BD79FA0056511C /* RequestDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestDelegate.swift; sourceTree = "<group>"; };
+		7B62CFEA29BD7F1E0056511C /* FeaturedFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedFeedCell.swift; sourceTree = "<group>"; };
+		7B62CFEC29BD7FF60056511C /* UITableView+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Utils.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +146,7 @@
 			children = (
 				65940BD627C315B9007BEDE4 /* FeaturedFeedViewController.swift */,
 				6537F3F527C49A5A00FFC278 /* FeaturedFeedViewModel.swift */,
+				7B62CFEA29BD7F1E0056511C /* FeaturedFeedCell.swift */,
 			);
 			path = FeaturedFeed;
 			sourceTree = "<group>";
@@ -265,6 +270,7 @@
 			children = (
 				7B62CFE529BD79AD0056511C /* ViewState.swift */,
 				7B62CFE829BD79FA0056511C /* RequestDelegate.swift */,
+				7B62CFEC29BD7FF60056511C /* UITableView+Utils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -383,6 +389,7 @@
 				65D49FF82829C2AE00D96E40 /* ActivityIndicator.swift in Sources */,
 				65940BD727C315B9007BEDE4 /* FeaturedFeedViewController.swift in Sources */,
 				65D49FF42829C12600D96E40 /* LoadingViewCard.swift in Sources */,
+				7B62CFEB29BD7F1E0056511C /* FeaturedFeedCell.swift in Sources */,
 				7B62CFE929BD79FA0056511C /* RequestDelegate.swift in Sources */,
 				65FB225527C31B26004110DF /* RootTabBar.swift in Sources */,
 				65D49FF52829C12600D96E40 /* LoadingViewController.swift in Sources */,
@@ -396,6 +403,7 @@
 				7B62CFE629BD79AD0056511C /* ViewState.swift in Sources */,
 				65FB225B27C31BDD004110DF /* UIView+.swift in Sources */,
 				6537F3F627C49A5A00FFC278 /* FeaturedFeedViewModel.swift in Sources */,
+				7B62CFED29BD7FF60056511C /* UITableView+Utils.swift in Sources */,
 				6537F3FE27C4A0E000FFC278 /* OutOfBoundsTouchView.swift in Sources */,
 				65FB225F27C31D15004110DF /* Typography.swift in Sources */,
 				65C1945A27C41C52006E960A /* ReclipLabel.swift in Sources */,

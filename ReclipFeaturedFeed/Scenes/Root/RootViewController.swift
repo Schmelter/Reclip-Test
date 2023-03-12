@@ -8,7 +8,7 @@ import UIKit
 final class RootViewController: UIViewController {
 
     private lazy var contentView = OutOfBoundsTouchView()
-    private lazy var featuredFeedViewController = FeaturedFeedViewController()
+    private lazy var featuredFeedViewController = FeaturedFeedViewController(viewModel: FeaturedFeedViewModel())
     private lazy var libraryViewController = LibraryViewController()
     private lazy var tabBar = RootTabBar()
 

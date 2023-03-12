@@ -36,16 +36,26 @@ struct FeaturedFeedAPI {
             }
 
             do {
-                let feedResponse = try jsonDecoder.decode(FeaturedFeedResponse.self, from: data)
+                let feedResponse = try jsonDecoder.decode([FeaturedFeedModel].self, from: data)
                 // Filter out duplicate entries based on id by turning them into a Dictionary
                 // based on the id
-                let featuredFeedDict = feedResponse.data.reduce(into: [String: FeaturedFeedModel]()) { partialResult, featuredFeedModel in
+                let featuredFeedDict = feedResponse.reduce(into: [String: FeaturedFeedModel]()) { partialResult, featuredFeedModel in
                     partialResult[featuredFeedModel.id] = featuredFeedModel
                 }
                 completion(.success(Array(featuredFeedDict.values)))
-            } catch let error {
-                print(#function, "Failed Request. Request: \(request)\nError: \(error)")
-                completion(.failure(error))
+            } catch let DecodingError.dataCorrupted(context) {
+                print(context)
+            } catch let DecodingError.keyNotFound(key, context) {
+                print("Key '\(key)' not found:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+            } catch let DecodingError.valueNotFound(value, context) {
+                print("Value '\(value)' not found:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+            } catch let DecodingError.typeMismatch(type, context)  {
+                print("Type '\(type)' mismatch:", context.debugDescription)
+                print("codingPath:", context.codingPath)
+            } catch {
+                print("error: ", error)
             }
 
         }.resume()

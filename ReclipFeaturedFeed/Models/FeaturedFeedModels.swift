@@ -5,15 +5,11 @@
 
 import Foundation
 
-struct FeaturedFeedResponse: Codable {
-    var data: [FeaturedFeedModel]
-}
-
 struct FeaturedFeedModel: Codable {
     var id: String
     var share: ShareModel
     var createdBy: String
-    var createdAt: Date
+    var createdAt: Date?
 }
 
 struct ShareModel: Codable {
@@ -25,9 +21,8 @@ struct ShareModel: Codable {
     var videoTitle: String
     var videoFilename: String
     var videoUrl: String
-    var videoUrlHls: String
     var url: String
-    var createdAt: Date
-    var endedAt: Date
+    var createdAt: Date?
+    var endedAt: Date?
     var disabled: Bool
 }
