@@ -27,6 +27,13 @@ final class FeaturedFeedCell: UITableViewCell {
         return label
     }()
     
+    private lazy var playPauseButton: UIButton = {
+       let playPauseButton = UIButton()
+        playPauseButton.setImage(nil, for: .normal)
+        playPauseButton.addTarget(self, action: #selector(playVideo), for: .touchUpInside)
+        return playPauseButton
+    }()
+    
     // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -69,6 +76,9 @@ private extension FeaturedFeedCell {
             controller.view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             controller.view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ])
+        
+        contentView.addSubview(playPauseButton)
+        playPauseButton.fillSuperview()
     }
 }
 

@@ -78,12 +78,30 @@ private extension FeaturedFeedViewController {
         view = OutOfBoundsTouchView()
 
         view.backgroundColor = .white
-        
-        view.addSubview(loadingViewController.view)
-        loadingViewController.view.fillSuperview()
 
         view.addSubview(tableView)
         tableView.fillSuperview()
+    }
+}
+
+// MARK: Loading View
+private extension FeaturedFeedViewController {
+    private func setLoadingViewHidden(_ hidden: Bool) {
+        switch hidden {
+        case false:
+            view.addSubview(loadingViewController.view)
+            loadingViewController.view.alpha = 0.0
+            loadingViewController.view.fillSuperview()
+            UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveEaseIn, animations: {
+                self.loadingViewController.view.alpha = 1.0
+            })
+        case true:
+            UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveEaseIn, animations: {
+                self.loadingViewController.view.alpha = 0.0
+            }, completion: { (finished: Bool) in
+                self.loadingViewController.view.removeFromSuperview()
+            })
+        }
     }
 }
 
@@ -98,6 +116,11 @@ extension FeaturedFeedViewController: UITableViewDelegate, UITableViewDataSource
         cell.configure(info: viewModel.getInfo(for: indexPath))
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        // All videos are the same height, based on the height of the table view
+        return tableView.bounds.height
+    }
 }
 
 // MARK: RequestDelegate
@@ -109,13 +132,16 @@ extension FeaturedFeedViewController: RequestDelegate {
             case .idle:
                 break
             case .loading:
-                self.setProgressBarHidden(false)
+                self.setLoadingViewHidden(false)
+                self.setProgressBarHidden(true)
             case .success:
+                self.setLoadingViewHidden(true)
                 self.tableView.setContentOffset(.zero, animated: true)
                 self.tableView.reloadData()
-                self.setProgressBarHidden(true)
+                self.setProgressBarHidden(false)
             case .error(let error):
                 self.setProgressBarHidden(true)
+                self.setLoadingViewHidden(true)
                 DispatchQueue.main.async { [weak self]  in
                     guard let self = self else { return }
                     let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
