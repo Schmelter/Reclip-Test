@@ -38,6 +38,10 @@
 		65FB225727C31B53004110DF /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FB225627C31B53004110DF /* UIColor+.swift */; };
 		65FB225B27C31BDD004110DF /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FB225A27C31BDD004110DF /* UIView+.swift */; };
 		65FB225F27C31D15004110DF /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FB225E27C31D15004110DF /* Typography.swift */; };
+		7B62CFE229BD752D0056511C /* FeaturedFeedModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B62CFE129BD752D0056511C /* FeaturedFeedModels.swift */; };
+		7B62CFE429BD766B0056511C /* ServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B62CFE329BD766B0056511C /* ServiceError.swift */; };
+		7B62CFE629BD79AD0056511C /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B62CFE529BD79AD0056511C /* ViewState.swift */; };
+		7B62CFE929BD79FA0056511C /* RequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B62CFE829BD79FA0056511C /* RequestDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +89,10 @@
 		65FB225627C31B53004110DF /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		65FB225A27C31BDD004110DF /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		65FB225E27C31D15004110DF /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
+		7B62CFE129BD752D0056511C /* FeaturedFeedModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedFeedModels.swift; sourceTree = "<group>"; };
+		7B62CFE329BD766B0056511C /* ServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceError.swift; sourceTree = "<group>"; };
+		7B62CFE529BD79AD0056511C /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
+		7B62CFE829BD79FA0056511C /* RequestDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				65D5768927BC36B2006DC9A8 /* FeaturedFeedAPI.swift */,
+				7B62CFE329BD766B0056511C /* ServiceError.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -222,6 +231,8 @@
 		65D5765627BC3321006DC9A8 /* ReclipFeaturedFeed */ = {
 			isa = PBXGroup;
 			children = (
+				7B62CFE729BD79D80056511C /* Utils */,
+				7B62CFDA29BD72A90056511C /* Models */,
 				65D5765727BC3321006DC9A8 /* AppDelegate.swift */,
 				65C1945327C40904006E960A /* Scenes */,
 				65C1945227C408F7006E960A /* UIHelpers */,
@@ -239,6 +250,23 @@
 				65D5766E27BC3323006DC9A8 /* FeaturedFeedViewModelTests.swift */,
 			);
 			path = ReclipFeaturedFeedTests;
+			sourceTree = "<group>";
+		};
+		7B62CFDA29BD72A90056511C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7B62CFE129BD752D0056511C /* FeaturedFeedModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		7B62CFE729BD79D80056511C /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				7B62CFE529BD79AD0056511C /* ViewState.swift */,
+				7B62CFE829BD79FA0056511C /* RequestDelegate.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -355,13 +383,17 @@
 				65D49FF82829C2AE00D96E40 /* ActivityIndicator.swift in Sources */,
 				65940BD727C315B9007BEDE4 /* FeaturedFeedViewController.swift in Sources */,
 				65D49FF42829C12600D96E40 /* LoadingViewCard.swift in Sources */,
+				7B62CFE929BD79FA0056511C /* RequestDelegate.swift in Sources */,
 				65FB225527C31B26004110DF /* RootTabBar.swift in Sources */,
 				65D49FF52829C12600D96E40 /* LoadingViewController.swift in Sources */,
 				6537F3FA27C49E2B00FFC278 /* VerticalGradientView.swift in Sources */,
 				65C1945C27C41CD1006E960A /* UIFont+.swift in Sources */,
 				65D5768A27BC36B2006DC9A8 /* FeaturedFeedAPI.swift in Sources */,
+				7B62CFE229BD752D0056511C /* FeaturedFeedModels.swift in Sources */,
 				65940BD927C31625007BEDE4 /* LibraryViewController.swift in Sources */,
 				65D5768827BC36A5006DC9A8 /* VideoPlayerView.swift in Sources */,
+				7B62CFE429BD766B0056511C /* ServiceError.swift in Sources */,
+				7B62CFE629BD79AD0056511C /* ViewState.swift in Sources */,
 				65FB225B27C31BDD004110DF /* UIView+.swift in Sources */,
 				6537F3F627C49A5A00FFC278 /* FeaturedFeedViewModel.swift in Sources */,
 				6537F3FE27C4A0E000FFC278 /* OutOfBoundsTouchView.swift in Sources */,

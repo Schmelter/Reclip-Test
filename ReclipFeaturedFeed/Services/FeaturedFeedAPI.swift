@@ -16,6 +16,41 @@ struct FeaturedFeedAPI {
         decoder.dateDecodingStrategy = .iso8601WithFractionsAllowed
         return decoder
     }()
+    
+    static func getAllFeaturedFeeds(completion: @escaping (Result<[FeaturedFeedModel], Error>) -> Void) {
+        // TODO: Check if the network is reachable
+
+        var request = URLRequest(url: endpoint)
+        request.httpMethod = "GET"
+
+        URLSession.shared.dataTask(with: request) { data, _, error in
+            if let error = error {
+                print(#function, "Failed Request. Request: \(request)\nError: \(error)")
+                completion(.failure(error))
+                return
+            }
+
+            guard let data = data else {
+                completion(.failure(ServiceError.noData))
+                return
+            }
+
+            do {
+                let feedResponse = try jsonDecoder.decode(FeaturedFeedResponse.self, from: data)
+                // Filter out duplicate entries based on id by turning them into a Dictionary
+                // based on the id
+                let featuredFeedDict = feedResponse.data.reduce(into: [String: FeaturedFeedModel]()) { partialResult, featuredFeedModel in
+                    partialResult[featuredFeedModel.id] = featuredFeedModel
+                }
+                completion(.success(Array(featuredFeedDict.values)))
+            } catch let error {
+                print(#function, "Failed Request. Request: \(request)\nError: \(error)")
+                completion(.failure(error))
+            }
+
+        }.resume()
+
+    }
 
 }
 
