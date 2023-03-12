@@ -14,7 +14,6 @@ final class FeaturedFeedCell: UITableViewCell {
         let controller = AVPlayerViewController()
         controller.player = player
         controller.videoGravity = AVLayerVideoGravity.resizeAspect
-        controller.view.frame = CGRect(x:0, y:0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         controller.showsPlaybackControls = false
         return controller
     }()
@@ -27,19 +26,11 @@ final class FeaturedFeedCell: UITableViewCell {
         return label
     }()
     
-    private lazy var playPauseButton: UIButton = {
-       let playPauseButton = UIButton()
-        playPauseButton.setImage(nil, for: .normal)
-        playPauseButton.addTarget(self, action: #selector(playVideo), for: .touchUpInside)
-        return playPauseButton
-    }()
-    
     // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
         self.backgroundColor = .white
-        configureLayout()
     }
 
     required init?(coder: NSCoder) {
@@ -51,43 +42,69 @@ final class FeaturedFeedCell: UITableViewCell {
         self.controller.player?.replaceCurrentItem(with: nil)
         self.titleLabel.text = nil
     }
-    
-    // MARK: - IBActions
-    @IBAction func playVideo(_ sender: UIButton) {
+}
+
+// MARK: - Video Control
+extension FeaturedFeedCell {
+    func isPlaying() -> Bool {
         if let player = controller.player {
-            if (player.rate != 0 && player.error == nil) {
+            return player.rate != 0 && player.error == nil
+        }
+        return false
+    }
+    
+    func playPauseVideo() {
+        if let player = controller.player {
+            if (isPlaying()) {
                 player.pause()
             } else {
+                guard let duration = player.currentItem?.duration, let currentTime = player.currentItem?.currentTime() else {
+                    return
+                }
+                if duration.seconds == 0 {
+                    // No video?
+                    return
+                }
+                
+                // Reset the video if they're within 2 second of the end, play otherwise
+                if duration.seconds - currentTime.seconds < 2 {
+                    player.seek(to: CMTime.zero)
+                }
                 player.play()
             }
         }
     }
-}
-
-// MARK: - Configure Layout
-private extension FeaturedFeedCell {
-    func configureLayout() {
-        backgroundColor = .white
-        
-        contentView.addSubview(controller.view)
-        NSLayoutConstraint.activate([
-            controller.view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            controller.view.topAnchor.constraint(equalTo: contentView.topAnchor),
-            controller.view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            controller.view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-        ])
-        
-        contentView.addSubview(playPauseButton)
-        playPauseButton.fillSuperview()
+    
+    func pauseVideo() {
+        if let player = controller.player {
+            player.pause()
+        }
     }
 }
 
 // MARK: - Configure
 extension FeaturedFeedCell {
-    func configure(info: (videoTitle: String, videoUrl: String)) {
+    func configure(info: (videoTitle: String, videoUrl: String, videoProgress: CMTime)) {
         guard let videoURL = URL(string: info.videoUrl) else { return }
+        
+        if contentView.subviews.count == 0 {
+            // Needs to be configured
+            if let playerView = controller.view {
+                playerView.translatesAutoresizingMaskIntoConstraints = false
+                playerView.backgroundColor = UIColor.black
+                contentView.addSubview(playerView)
+                playerView.fillSuperview()
+            }
+        }
+        let timeScale = CMTimeScale(NSEC_PER_SEC)
         
         self.titleLabel.text = info.videoTitle
         controller.player?.replaceCurrentItem(with: AVPlayerItem(url: videoURL))
+        controller.player?.seek(to: info.videoProgress, toleranceBefore: CMTime(value: 0, timescale: timeScale), toleranceAfter: CMTime(value: 0, timescale: timeScale))
+        
+        let time = CMTime(seconds: 0.1, preferredTimescale: timeScale)
+        controller.player?.addPeriodicTimeObserver(forInterval: time, queue: .main, using: { [weak self] videoProgress in
+            
+        })
     }
 }

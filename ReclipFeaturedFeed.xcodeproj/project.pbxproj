@@ -44,6 +44,7 @@
 		7B62CFE929BD79FA0056511C /* RequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B62CFE829BD79FA0056511C /* RequestDelegate.swift */; };
 		7B62CFEB29BD7F1E0056511C /* FeaturedFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B62CFEA29BD7F1E0056511C /* FeaturedFeedCell.swift */; };
 		7B62CFED29BD7FF60056511C /* UITableView+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B62CFEC29BD7FF60056511C /* UITableView+Utils.swift */; };
+		7B62CFEF29BE76790056511C /* Dynamic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B62CFEE29BE76790056511C /* Dynamic.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +98,7 @@
 		7B62CFE829BD79FA0056511C /* RequestDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestDelegate.swift; sourceTree = "<group>"; };
 		7B62CFEA29BD7F1E0056511C /* FeaturedFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedFeedCell.swift; sourceTree = "<group>"; };
 		7B62CFEC29BD7FF60056511C /* UITableView+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Utils.swift"; sourceTree = "<group>"; };
+		7B62CFEE29BE76790056511C /* Dynamic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dynamic.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -271,6 +273,7 @@
 				7B62CFE529BD79AD0056511C /* ViewState.swift */,
 				7B62CFE829BD79FA0056511C /* RequestDelegate.swift */,
 				7B62CFEC29BD7FF60056511C /* UITableView+Utils.swift */,
+				7B62CFEE29BE76790056511C /* Dynamic.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -397,6 +400,7 @@
 				65C1945C27C41CD1006E960A /* UIFont+.swift in Sources */,
 				65D5768A27BC36B2006DC9A8 /* FeaturedFeedAPI.swift in Sources */,
 				7B62CFE229BD752D0056511C /* FeaturedFeedModels.swift in Sources */,
+				7B62CFEF29BE76790056511C /* Dynamic.swift in Sources */,
 				65940BD927C31625007BEDE4 /* LibraryViewController.swift in Sources */,
 				65D5768827BC36A5006DC9A8 /* VideoPlayerView.swift in Sources */,
 				7B62CFE429BD766B0056511C /* ServiceError.swift in Sources */,

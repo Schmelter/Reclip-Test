@@ -16,7 +16,7 @@ final class FeaturedFeedViewController: UIViewController {
         tableView.registerCell(cellClass: FeaturedFeedCell.self)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = .black
         return tableView
     }()
     
@@ -54,19 +54,6 @@ final class FeaturedFeedViewController: UIViewController {
             progressBar.removeFromSuperview()
         }
     }
-
-    private func setChild(_ child: UIViewController?) {
-        children.first?.willMove(toParent: nil)
-        children.first?.view.removeFromSuperview()
-        children.first?.removeFromParent()
-
-        if let child = child {
-            addChild(child)
-            view.addSubview(child.view)
-            child.view.fillSuperview()
-            child.didMove(toParent: self)
-        }
-    }
 }
 
 
@@ -78,9 +65,12 @@ private extension FeaturedFeedViewController {
         view = OutOfBoundsTouchView()
 
         view.backgroundColor = .white
-
+        
         view.addSubview(tableView)
         tableView.fillSuperview()
+        
+        addChild(loadingViewController)
+        loadingViewController.didMove(toParent: self)
     }
 }
 
@@ -120,6 +110,19 @@ extension FeaturedFeedViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         // All videos are the same height, based on the height of the table view
         return tableView.bounds.height
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! FeaturedFeedCell
+        if (!cell.isPlaying()) {
+            self.tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
+        }
+        cell.playPauseVideo()
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let ffCell = cell as! FeaturedFeedCell
+        ffCell.pauseVideo()
     }
 }
 

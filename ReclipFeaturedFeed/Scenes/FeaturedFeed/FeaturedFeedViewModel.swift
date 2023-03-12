@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import AVKit
 
 final class FeaturedFeedViewModel {
     weak var delegate: RequestDelegate?
@@ -26,10 +27,10 @@ extension FeaturedFeedViewModel {
         featuredFeeds.count
     }
 
-    func getInfo(for indexPath: IndexPath) -> (videoTitle: String, videoUrl: String) {
+    func getInfo(for indexPath: IndexPath) -> (videoTitle: String, videoUrl: String, videoProgress: CMTime) {
         let featuredFeed = featuredFeeds[indexPath.row]
         // Returned a paired down tuple with just the info the View is interested in
-        return (videoTitle: featuredFeed.share.videoTitle, videoUrl: featuredFeed.share.videoUrl)
+        return (videoTitle: featuredFeed.share.videoTitle, videoUrl: featuredFeed.share.videoUrl, featuredFeed.share.videoProgress)
     }
 }
 
