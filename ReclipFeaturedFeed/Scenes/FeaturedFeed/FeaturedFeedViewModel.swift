@@ -13,6 +13,14 @@ final class FeaturedFeedViewModel {
     
     init() {
         self.state = Dynamic<ViewState>(.idle)
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(saveData), name: UIApplication.willResignActiveNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(loadData), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    deinit {
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.removeObserver(self)
     }
 }
 
@@ -28,13 +36,19 @@ extension FeaturedFeedViewModel {
         return FeaturedFeedCellViewModel(
             videoTitle: featuredFeed.share.videoTitle,
             videoUrl: featuredFeed.share.videoUrl,
-            videoProgress: featuredFeed.share.videoProgress)
+            videoProgress: featuredFeed.share.videoProgress ?? 0)
+    }
+    
+    func updateVideoProgress(for indexPath: IndexPath, videoProgress: Float) {
+        var featuredFeed = featuredFeeds[indexPath.row]
+        featuredFeed.share.videoProgress = Optional<Float>(videoProgress)
+        featuredFeeds[indexPath.row] = featuredFeed
     }
 }
 
 // MARK: - Service
 extension FeaturedFeedViewModel {
-    func loadData() {
+    @objc func loadData() {
         self.state.value = .loading
         FeaturedFeedAPI.getAllFeaturedFeeds { result in
             switch result {
@@ -46,5 +60,9 @@ extension FeaturedFeedViewModel {
                 self.state.value = .error(error)
             }
         }
+    }
+    
+    @objc func saveData() {
+        FeaturedFeedAPI.saveToUserDefaults(featuredFeedModels: featuredFeeds)
     }
 }

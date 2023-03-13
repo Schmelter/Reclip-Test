@@ -18,7 +18,6 @@ struct FeaturedFeedAPI {
     }()
     
     static func getAllFeaturedFeeds(completion: @escaping (Result<[FeaturedFeedModel], Error>) -> Void) {
-        // TODO: Check if the network is reachable
 
         var request = URLRequest(url: endpoint)
         request.httpMethod = "GET"
@@ -36,13 +35,25 @@ struct FeaturedFeedAPI {
             }
 
             do {
-                let feedResponse = try jsonDecoder.decode([FeaturedFeedModel].self, from: data)
+                var feedResponse = try jsonDecoder.decode([FeaturedFeedModel].self, from: data)
                 // Filter out duplicate entries based on id by turning them into a Dictionary
                 // based on the id
-                let featuredFeedDict = feedResponse.reduce(into: [String: FeaturedFeedModel]()) { partialResult, featuredFeedModel in
-                    partialResult[featuredFeedModel.id] = featuredFeedModel
+                var feedIds = Set(feedResponse.map({ featuredFeedModel in
+                    return featuredFeedModel.id
+                }))
+                feedResponse = feedResponse.reduce(into: [ FeaturedFeedModel]()) { partialResult, featuredFeedModel in
+                    if feedIds.contains(featuredFeedModel.id) {
+                        feedIds.remove(featuredFeedModel.id)
+                        partialResult.append(featuredFeedModel)
+                    }
                 }
-                completion(.success(Array(featuredFeedDict.values)))
+                
+                // Inject the progress, if we have them
+                feedResponse = feedResponse.map { featuredFeedModel in
+                    let videoProgress = UserDefaults.standard.float(forKey: featuredFeedModel.id)
+                    return FeaturedFeedModel(featuredFeedModel: featuredFeedModel, videoProgress: videoProgress)
+                }
+                completion(.success(feedResponse))
             } catch let DecodingError.dataCorrupted(context) {
                 print(context)
             } catch let DecodingError.keyNotFound(key, context) {
@@ -61,7 +72,15 @@ struct FeaturedFeedAPI {
         }.resume()
 
     }
-
+    
+    static func saveToUserDefaults(featuredFeedModels: [FeaturedFeedModel]) {
+        for featuredFeedModel in featuredFeedModels {
+            if (featuredFeedModel.share.videoProgress ?? 0 > 0) {
+                UserDefaults.standard.set(featuredFeedModel.share.videoProgress, forKey: featuredFeedModel.id)
+            }
+        }
+        UserDefaults.standard.synchronize()
+    }
 }
 
 extension JSONDecoder.DateDecodingStrategy {
