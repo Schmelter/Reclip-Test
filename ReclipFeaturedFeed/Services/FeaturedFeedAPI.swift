@@ -73,10 +73,10 @@ struct FeaturedFeedAPI {
 
     }
     
-    static func saveToUserDefaults(featuredFeedModels: [FeaturedFeedModel]) {
-        for featuredFeedModel in featuredFeedModels {
-            if (featuredFeedModel.share.videoProgress ?? 0 > 0) {
-                UserDefaults.standard.set(featuredFeedModel.share.videoProgress, forKey: featuredFeedModel.id)
+    static func saveToUserDefaults(idToVideoProgressDict: [String: Float]) {
+        for (videoId, videoProgress) in idToVideoProgressDict {
+            if (videoProgress > 0) {
+                UserDefaults.standard.set(videoProgress, forKey: videoId)
             }
         }
         UserDefaults.standard.synchronize()

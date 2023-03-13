@@ -150,6 +150,7 @@
 			children = (
 				65940BD627C315B9007BEDE4 /* FeaturedFeedViewController.swift */,
 				6537F3F527C49A5A00FFC278 /* FeaturedFeedViewModel.swift */,
+				7B4024F329BEBF3B00D44FC4 /* FeaturedFeedCellViewModel.swift */,
 				7B62CFEA29BD7F1E0056511C /* FeaturedFeedCell.swift */,
 			);
 			path = FeaturedFeed;
@@ -265,7 +266,6 @@
 			isa = PBXGroup;
 			children = (
 				7B62CFE129BD752D0056511C /* FeaturedFeedModels.swift */,
-				7B4024F329BEBF3B00D44FC4 /* FeaturedFeedCellViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";

@@ -9,7 +9,7 @@ import AVKit
 final class FeaturedFeedViewModel {
     var state: Dynamic<ViewState>
     
-    private var featuredFeeds: [FeaturedFeedModel] = []
+    private var cellViewModels: Array<FeaturedFeedCellViewModel> = []
     
     init() {
         self.state = Dynamic<ViewState>(.idle)
@@ -27,42 +27,52 @@ final class FeaturedFeedViewModel {
 // MARK: - DataSource
 extension FeaturedFeedViewModel {
     var numberOfItems: Int {
-        featuredFeeds.count
+        return cellViewModels.count
     }
 
     func getCellViewModel(for indexPath: IndexPath) -> FeaturedFeedCellViewModel {
-        let featuredFeed = featuredFeeds[indexPath.row]
-        // Returned a paired down tuple with just the info the View is interested in
-        return FeaturedFeedCellViewModel(
-            videoTitle: featuredFeed.share.videoTitle,
-            videoUrl: featuredFeed.share.videoUrl,
-            videoProgress: featuredFeed.share.videoProgress ?? 0)
+        return cellViewModels[indexPath.row]
     }
     
     func updateVideoProgress(for indexPath: IndexPath, videoProgress: Float) {
-        var featuredFeed = featuredFeeds[indexPath.row]
-        featuredFeed.share.videoProgress = Optional<Float>(videoProgress)
-        featuredFeeds[indexPath.row] = featuredFeed
+        let cellViewModel = cellViewModels[indexPath.row]
+        cellViewModel.videoProgress.value = videoProgress
+        cellViewModels[indexPath.row] = cellViewModel
     }
 }
 
 // MARK: - Service
 extension FeaturedFeedViewModel {
+    private func buildCellViewModel(featuredFeed: FeaturedFeedModel) -> FeaturedFeedCellViewModel {
+        return FeaturedFeedCellViewModel(
+            videoId: featuredFeed.id,
+            videoTitle: featuredFeed.share.videoTitle,
+            videoUrl: featuredFeed.share.videoUrl,
+            videoProgress: featuredFeed.share.videoProgress ?? 0)
+    }
+    
     @objc func loadData() {
         self.state.value = .loading
         FeaturedFeedAPI.getAllFeaturedFeeds { result in
             switch result {
             case let .success(featuredFeeds):
-                self.featuredFeeds = featuredFeeds
+                self.cellViewModels = []
+                for featuredFeed in featuredFeeds {
+                    self.cellViewModels.append(self.buildCellViewModel(featuredFeed: featuredFeed))
+                }
                 self.state.value = .success
             case let .failure(error):
-                self.featuredFeeds = []
+                self.cellViewModels = []
                 self.state.value = .error(error)
             }
         }
     }
     
     @objc func saveData() {
-        FeaturedFeedAPI.saveToUserDefaults(featuredFeedModels: featuredFeeds)
+        let idToVideoProgressDict: Dictionary<String, Float> = cellViewModels.reduce(into: [String: Float]()) { partialResult, cellViewModel in
+            partialResult[cellViewModel.videoId] = cellViewModel.videoProgress.value
+        }
+        
+        FeaturedFeedAPI.saveToUserDefaults(idToVideoProgressDict: idToVideoProgressDict)
     }
 }

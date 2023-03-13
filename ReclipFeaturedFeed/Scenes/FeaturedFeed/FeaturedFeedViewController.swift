@@ -106,7 +106,6 @@ extension FeaturedFeedViewController: UITableViewDelegate, UITableViewDataSource
         let cellViewModel = viewModel.getCellViewModel(for: indexPath)
         cellViewModel.videoProgress.bind { [unowned self] videoProgress in
             self.progressBar.setProgress(videoProgress)
-            self.viewModel.updateVideoProgress(for: indexPath, videoProgress: videoProgress)
         }
         cell.bindToViewModel(viewModel:cellViewModel)
         return cell
