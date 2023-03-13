@@ -28,8 +28,7 @@ extension FeaturedFeedViewModel {
         return FeaturedFeedCellViewModel(
             videoTitle: featuredFeed.share.videoTitle,
             videoUrl: featuredFeed.share.videoUrl,
-            videoProgress: featuredFeed.share.videoProgress,
-            videoTime: featuredFeed.share.videoTime)
+            videoProgress: featuredFeed.share.videoProgress)
     }
 }
 

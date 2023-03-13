@@ -104,8 +104,8 @@ extension FeaturedFeedViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeue(cellClass: FeaturedFeedCell.self, indexPath: indexPath)
         let cellViewModel = viewModel.getCellViewModel(for: indexPath)
-        cellViewModel.videoTimeProgress.bind { [unowned self] videoTimeProgress in
-            self.progressBar.setProgress(videoTimeProgress.1)
+        cellViewModel.videoProgress.bind { [unowned self] videoProgress in
+            self.progressBar.setProgress(videoProgress)
         }
         cell.bindToViewModel(viewModel:cellViewModel)
         return cell
@@ -118,15 +118,15 @@ extension FeaturedFeedViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! FeaturedFeedCell
-        if (!cell.isPlaying()) {
+        if (cell.isPaused()) {
             self.tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
         }
-        cell.playPauseVideo()
+        cell.togglePlayback()
     }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let ffCell = cell as! FeaturedFeedCell
-        ffCell.pauseVideo()
+        ffCell.pause()
     }
 }
 

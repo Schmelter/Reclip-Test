@@ -27,7 +27,6 @@ struct ShareModel: Codable {
     var endedAt: Date?
     var disabled: Bool
     
-    var videoTime: CMTime = CMTime.zero
     var videoProgress: Float = 0.0
     
     private enum CodingKeys: String, CodingKey {

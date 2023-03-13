@@ -10,13 +10,13 @@ final class FeaturedFeedCellViewModel {
     
     var videoTitle: String
     var videoUrl: String
-    var videoTimeProgress: Dynamic<(CMTime, Float)>
+    var videoProgress: Dynamic<(Float)>
     var state: Dynamic<VideoState>
     
-    init(videoTitle: String, videoUrl: String, videoProgress: Float, videoTime: CMTime) {
+    init(videoTitle: String, videoUrl: String, videoProgress: Float) {
         self.videoTitle = videoTitle
         self.videoUrl = videoUrl
-        self.videoTimeProgress = Dynamic((videoTime, videoProgress))
+        self.videoProgress = Dynamic(videoProgress)
         
         // All videos start out paused
         self.state = Dynamic<VideoState>(.paused)

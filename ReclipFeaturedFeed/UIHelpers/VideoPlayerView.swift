@@ -18,7 +18,7 @@ final class VideoPlayerView: UIView {
         }
     }
 
-    @Published private(set) var playbackProgress: Float = 0
+    let playbackProgress: Dynamic<Float> = Dynamic<Float>(0.0)
 
     var isPaused: Bool {
         player.timeControlStatus == .paused
@@ -125,10 +125,10 @@ final class VideoPlayerView: UIView {
             return
         }
         guard duration.seconds > 0 else {
-            playbackProgress = 0
+            playbackProgress.value = 0
             return
         }
 
-        playbackProgress = Float(newTime/duration.seconds)
+        playbackProgress.value = Float(newTime/duration.seconds)
     }
 }
