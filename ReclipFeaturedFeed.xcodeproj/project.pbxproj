@@ -40,6 +40,7 @@
 		65FB225F27C31D15004110DF /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FB225E27C31D15004110DF /* Typography.swift */; };
 		7B4024F429BEBF3B00D44FC4 /* FeaturedFeedCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4024F329BEBF3B00D44FC4 /* FeaturedFeedCellViewModel.swift */; };
 		7B4024F629BEBF8800D44FC4 /* VideoState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4024F529BEBF8800D44FC4 /* VideoState.swift */; };
+		7B5E73A929BFCCEB00EADDA3 /* String+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E73A829BFCCEB00EADDA3 /* String+Error.swift */; };
 		7B62CFE229BD752D0056511C /* FeaturedFeedModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B62CFE129BD752D0056511C /* FeaturedFeedModels.swift */; };
 		7B62CFE429BD766B0056511C /* ServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B62CFE329BD766B0056511C /* ServiceError.swift */; };
 		7B62CFE629BD79AD0056511C /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B62CFE529BD79AD0056511C /* ViewState.swift */; };
@@ -97,6 +98,7 @@
 		65FB225E27C31D15004110DF /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
 		7B4024F329BEBF3B00D44FC4 /* FeaturedFeedCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedFeedCellViewModel.swift; sourceTree = "<group>"; };
 		7B4024F529BEBF8800D44FC4 /* VideoState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoState.swift; sourceTree = "<group>"; };
+		7B5E73A829BFCCEB00EADDA3 /* String+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Error.swift"; sourceTree = "<group>"; };
 		7B62CFE129BD752D0056511C /* FeaturedFeedModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedFeedModels.swift; sourceTree = "<group>"; };
 		7B62CFE329BD766B0056511C /* ServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceError.swift; sourceTree = "<group>"; };
 		7B62CFE529BD79AD0056511C /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 				7B62CFEC29BD7FF60056511C /* UITableView+Utils.swift */,
 				7B62CFEE29BE76790056511C /* Dynamic.swift */,
 				7B4024F529BEBF8800D44FC4 /* VideoState.swift */,
+				7B5E73A829BFCCEB00EADDA3 /* String+Error.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -397,6 +400,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65D5765C27BC3321006DC9A8 /* RootViewController.swift in Sources */,
+				7B5E73A929BFCCEB00EADDA3 /* String+Error.swift in Sources */,
 				65D5765827BC3321006DC9A8 /* AppDelegate.swift in Sources */,
 				65D49FF82829C2AE00D96E40 /* ActivityIndicator.swift in Sources */,
 				65940BD727C315B9007BEDE4 /* FeaturedFeedViewController.swift in Sources */,

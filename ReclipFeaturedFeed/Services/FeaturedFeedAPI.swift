@@ -63,17 +63,22 @@ class FeaturedFeedAPI {
                 completion(.success(feedResponse))
             } catch let DecodingError.dataCorrupted(context) {
                 print(context)
+                completion(.failure("Data Corrupted"))
             } catch let DecodingError.keyNotFound(key, context) {
                 print("Key '\(key)' not found:", context.debugDescription)
                 print("codingPath:", context.codingPath)
+                completion(.failure("Key Not Found"))
             } catch let DecodingError.valueNotFound(value, context) {
                 print("Value '\(value)' not found:", context.debugDescription)
                 print("codingPath:", context.codingPath)
+                completion(.failure("Value Not Found"))
             } catch let DecodingError.typeMismatch(type, context)  {
                 print("Type '\(type)' mismatch:", context.debugDescription)
                 print("codingPath:", context.codingPath)
+                completion(.failure("Type Mismatch"))
             } catch {
                 print("error: ", error)
+                completion(.failure("Generic Error"))
             }
 
         }.resume()
