@@ -26,7 +26,10 @@ extension FeaturedFeedViewModel {
         let featuredFeed = featuredFeeds[indexPath.row]
         // Returned a paired down tuple with just the info the View is interested in
         return FeaturedFeedCellViewModel(
-            videoTitle: featuredFeed.share.videoTitle, videoUrl: featuredFeed.share.videoUrl, videoProgress: featuredFeed.share.videoProgress)
+            videoTitle: featuredFeed.share.videoTitle,
+            videoUrl: featuredFeed.share.videoUrl,
+            videoProgress: featuredFeed.share.videoProgress,
+            videoTime: featuredFeed.share.videoTime)
     }
 }
 

@@ -100,11 +100,22 @@ extension FeaturedFeedCell {
         
         self.titleLabel.text = viewModel.videoTitle
         controller.player?.replaceCurrentItem(with: AVPlayerItem(url: videoURL))
-        controller.player?.seek(to: viewModel.videoProgress.value, toleranceBefore: CMTime(value: 0, timescale: timeScale), toleranceAfter: CMTime(value: 0, timescale: timeScale))
+        controller.player?.seek(to: viewModel.videoTimeProgress.value.0, toleranceBefore: CMTime(value: 0, timescale: timeScale), toleranceAfter: CMTime(value: 0, timescale: timeScale))
         
         let time = CMTime(seconds: 0.1, preferredTimescale: timeScale)
-        controller.player?.addPeriodicTimeObserver(forInterval: time, queue: .main, using: { [weak self] videoProgress in
-            
+        controller.player?.addPeriodicTimeObserver(forInterval: time, queue: .main, using: { [unowned self] videoTime in
+            if let player = self.controller.player {
+                let duration = CMTimeGetSeconds(player.currentItem!.duration)
+                
+                // Make sure duration makes sense, and we don't divide by zero
+                guard duration != 0.0 && !duration.isNaN else {
+                    viewModel.videoTimeProgress.value = (CMTime.zero, 0.0)
+                    return
+                }
+                
+                let videoProgress = Float(CMTimeGetSeconds(videoTime) / duration)
+                viewModel.videoTimeProgress.value = (videoTime, videoProgress)
+            }
         })
     }
 }

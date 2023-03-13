@@ -27,7 +27,8 @@ struct ShareModel: Codable {
     var endedAt: Date?
     var disabled: Bool
     
-    var videoProgress: CMTime = CMTime.zero
+    var videoTime: CMTime = CMTime.zero
+    var videoProgress: Float = 0.0
     
     private enum CodingKeys: String, CodingKey {
         case id, reclipId, code, userId, username, videoTitle, videoFilename, videoUrl,

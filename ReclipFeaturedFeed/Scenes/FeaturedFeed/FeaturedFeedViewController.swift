@@ -103,7 +103,11 @@ extension FeaturedFeedViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeue(cellClass: FeaturedFeedCell.self, indexPath: indexPath)
-        cell.bindToViewModel(viewModel:viewModel.getCellViewModel(for: indexPath))
+        let cellViewModel = viewModel.getCellViewModel(for: indexPath)
+        cellViewModel.videoTimeProgress.bind { [unowned self] videoTimeProgress in
+            self.progressBar.setProgress(videoTimeProgress.1)
+        }
+        cell.bindToViewModel(viewModel:cellViewModel)
         return cell
     }
     
@@ -129,7 +133,7 @@ extension FeaturedFeedViewController: UITableViewDelegate, UITableViewDataSource
 // MARK: RequestDelegate
 extension FeaturedFeedViewController {
     func bindToViewModel() {
-        self.viewModel.state.bindAndFire { [weak self] state in
+        self.viewModel.state.bindAndFire { [unowned self] state in
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 switch state {
@@ -146,13 +150,10 @@ extension FeaturedFeedViewController {
                 case .error(let error):
                     self.setProgressBarHidden(true)
                     self.setLoadingViewHidden(true)
-                    DispatchQueue.main.async { [weak self]  in
-                        guard let self = self else { return }
-                        let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                        
-                        self.present(alert, animated: true)
-                    }
+                    let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                    
+                    self.present(alert, animated: true)
                 }
             }
         }
