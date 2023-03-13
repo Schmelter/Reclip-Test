@@ -6,21 +6,45 @@
 import Foundation
 import AVKit
 
-struct FeaturedFeedModel: Codable {
+protocol FeaturedFeedModel: Codable {
+    var id: String {get set}
+    var share: ShareModelImpl {get set}
+    var createdBy: String {get set}
+    var createdAt: Date? {get set}
+}
+
+protocol ShareModel: Codable {
+    var id: String {get set}
+    var reclipId: String {get set}
+    var code: String {get set}
+    var userId: String {get set}
+    var username: String {get set}
+    var videoTitle: String {get set}
+    var videoFilename: String {get set}
+    var videoUrl: String {get set}
+    var url: String {get set}
+    var createdAt: Date? {get set}
+    var endedAt: Date? {get set}
+    var disabled: Bool {get set}
+    
+    var videoProgress: Optional<Float> {get set}
+}
+
+struct FeaturedFeedModelImpl: FeaturedFeedModel {
     var id: String
-    var share: ShareModel
+    var share: ShareModelImpl
     var createdBy: String
     var createdAt: Date?
     
     init(featuredFeedModel: FeaturedFeedModel, videoProgress: Float) {
         self.id = featuredFeedModel.id
-        self.share = ShareModel(shareModel: featuredFeedModel.share, videoProgress: videoProgress)
+        self.share = ShareModelImpl(shareModel: featuredFeedModel.share, videoProgress: videoProgress)
         self.createdBy = featuredFeedModel.createdBy
         self.createdAt = featuredFeedModel.createdAt
     }
 }
 
-struct ShareModel: Codable {
+struct ShareModelImpl: ShareModel {
     var id: String
     var reclipId: String
     var code: String

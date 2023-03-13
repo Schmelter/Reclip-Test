@@ -46,6 +46,8 @@
 		7B62CFEB29BD7F1E0056511C /* FeaturedFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B62CFEA29BD7F1E0056511C /* FeaturedFeedCell.swift */; };
 		7B62CFED29BD7FF60056511C /* UITableView+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B62CFEC29BD7FF60056511C /* UITableView+Utils.swift */; };
 		7B62CFEF29BE76790056511C /* Dynamic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B62CFEE29BE76790056511C /* Dynamic.swift */; };
+		7BEBF21129BFA31100EDD866 /* FeaturedFeedCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEBF21029BFA31100EDD866 /* FeaturedFeedCellViewModelTests.swift */; };
+		7BEBF21329BFA9A700EDD866 /* FeaturedFeedAPIMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEBF21229BFA9A700EDD866 /* FeaturedFeedAPIMock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +103,8 @@
 		7B62CFEA29BD7F1E0056511C /* FeaturedFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedFeedCell.swift; sourceTree = "<group>"; };
 		7B62CFEC29BD7FF60056511C /* UITableView+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Utils.swift"; sourceTree = "<group>"; };
 		7B62CFEE29BE76790056511C /* Dynamic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dynamic.swift; sourceTree = "<group>"; };
+		7BEBF21029BFA31100EDD866 /* FeaturedFeedCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedFeedCellViewModelTests.swift; sourceTree = "<group>"; };
+		7BEBF21229BFA9A700EDD866 /* FeaturedFeedAPIMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedFeedAPIMock.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -258,6 +262,8 @@
 			isa = PBXGroup;
 			children = (
 				65D5766E27BC3323006DC9A8 /* FeaturedFeedViewModelTests.swift */,
+				7BEBF21029BFA31100EDD866 /* FeaturedFeedCellViewModelTests.swift */,
+				7BEBF21229BFA9A700EDD866 /* FeaturedFeedAPIMock.swift */,
 			);
 			path = ReclipFeaturedFeedTests;
 			sourceTree = "<group>";
@@ -424,6 +430,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BEBF21129BFA31100EDD866 /* FeaturedFeedCellViewModelTests.swift in Sources */,
+				7BEBF21329BFA9A700EDD866 /* FeaturedFeedAPIMock.swift in Sources */,
 				65D5766F27BC3323006DC9A8 /* FeaturedFeedViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -5,19 +5,26 @@
 
 import Foundation
 
-struct FeaturedFeedAPI {
+class FeaturedFeedAPI {
 
+    static let shared: FeaturedFeedAPI = FeaturedFeedAPI(endpoint: endpoint)
     static let endpoint = URL(string: "https://production-api.reclip.app/shares/featured")!
+    
+    let endpoint: URL
+    
+    init(endpoint: URL) {
+        self.endpoint = endpoint
+    }
 
     /** JSON decoder configured to parse data in the API's response format. */
-    static let jsonDecoder: JSONDecoder = {
+    let jsonDecoder: JSONDecoder = {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         decoder.dateDecodingStrategy = .iso8601WithFractionsAllowed
         return decoder
     }()
     
-    static func getAllFeaturedFeeds(completion: @escaping (Result<[FeaturedFeedModel], Error>) -> Void) {
+    func getAllFeaturedFeeds(completion: @escaping (Result<[FeaturedFeedModel], Error>) -> Void) {
 
         var request = URLRequest(url: endpoint)
         request.httpMethod = "GET"
@@ -35,13 +42,13 @@ struct FeaturedFeedAPI {
             }
 
             do {
-                var feedResponse = try jsonDecoder.decode([FeaturedFeedModel].self, from: data)
+                var feedResponse = try self.jsonDecoder.decode([FeaturedFeedModelImpl].self, from: data)
                 // Filter out duplicate entries based on id by turning them into a Dictionary
                 // based on the id
                 var feedIds = Set(feedResponse.map({ featuredFeedModel in
                     return featuredFeedModel.id
                 }))
-                feedResponse = feedResponse.reduce(into: [ FeaturedFeedModel]()) { partialResult, featuredFeedModel in
+                feedResponse = feedResponse.reduce(into: [ FeaturedFeedModelImpl]()) { partialResult, featuredFeedModel in
                     if feedIds.contains(featuredFeedModel.id) {
                         feedIds.remove(featuredFeedModel.id)
                         partialResult.append(featuredFeedModel)
@@ -51,7 +58,7 @@ struct FeaturedFeedAPI {
                 // Inject the progress, if we have them
                 feedResponse = feedResponse.map { featuredFeedModel in
                     let videoProgress = UserDefaults.standard.float(forKey: featuredFeedModel.id)
-                    return FeaturedFeedModel(featuredFeedModel: featuredFeedModel, videoProgress: videoProgress)
+                    return FeaturedFeedModelImpl(featuredFeedModel: featuredFeedModel, videoProgress: videoProgress)
                 }
                 completion(.success(feedResponse))
             } catch let DecodingError.dataCorrupted(context) {
@@ -73,7 +80,7 @@ struct FeaturedFeedAPI {
 
     }
     
-    static func saveToUserDefaults(idToVideoProgressDict: [String: Float]) {
+    func saveToUserDefaults(idToVideoProgressDict: [String: Float]) {
         for (videoId, videoProgress) in idToVideoProgressDict {
             if (videoProgress > 0) {
                 UserDefaults.standard.set(videoProgress, forKey: videoId)

@@ -7,11 +7,13 @@ import Foundation
 import AVKit
 
 final class FeaturedFeedViewModel {
+    
+    private let featuredFeedApi: FeaturedFeedAPI
     var state: Dynamic<ViewState>
+    private(set) var cellViewModels: Array<FeaturedFeedCellViewModel> = []
     
-    private var cellViewModels: Array<FeaturedFeedCellViewModel> = []
-    
-    init() {
+    init(featuredFeedApi: FeaturedFeedAPI) {
+        self.featuredFeedApi = featuredFeedApi
         self.state = Dynamic<ViewState>(.idle)
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(saveData), name: UIApplication.willResignActiveNotification, object: nil)
@@ -53,7 +55,7 @@ extension FeaturedFeedViewModel {
     
     @objc func loadData() {
         self.state.value = .loading
-        FeaturedFeedAPI.getAllFeaturedFeeds { result in
+        featuredFeedApi.getAllFeaturedFeeds { result in
             switch result {
             case let .success(featuredFeeds):
                 self.cellViewModels = []
@@ -73,6 +75,6 @@ extension FeaturedFeedViewModel {
             partialResult[cellViewModel.videoId] = cellViewModel.videoProgress.value
         }
         
-        FeaturedFeedAPI.saveToUserDefaults(idToVideoProgressDict: idToVideoProgressDict)
+        featuredFeedApi.saveToUserDefaults(idToVideoProgressDict: idToVideoProgressDict)
     }
 }
