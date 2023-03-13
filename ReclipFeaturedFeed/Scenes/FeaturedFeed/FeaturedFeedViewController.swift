@@ -23,7 +23,7 @@ final class FeaturedFeedViewController: UIViewController {
     required init(viewModel: FeaturedFeedViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        self.viewModel.delegate = self
+        self.bindToViewModel()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -103,7 +103,7 @@ extension FeaturedFeedViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeue(cellClass: FeaturedFeedCell.self, indexPath: indexPath)
-        cell.configure(info: viewModel.getInfo(for: indexPath))
+        cell.bindToViewModel(viewModel:viewModel.getCellViewModel(for: indexPath))
         return cell
     }
     
@@ -127,30 +127,32 @@ extension FeaturedFeedViewController: UITableViewDelegate, UITableViewDataSource
 }
 
 // MARK: RequestDelegate
-extension FeaturedFeedViewController: RequestDelegate {
-    func didUpdate(with state: ViewState) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            switch state {
-            case .idle:
-                break
-            case .loading:
-                self.setLoadingViewHidden(false)
-                self.setProgressBarHidden(true)
-            case .success:
-                self.setLoadingViewHidden(true)
-                self.tableView.setContentOffset(.zero, animated: true)
-                self.tableView.reloadData()
-                self.setProgressBarHidden(false)
-            case .error(let error):
-                self.setProgressBarHidden(true)
-                self.setLoadingViewHidden(true)
-                DispatchQueue.main.async { [weak self]  in
-                    guard let self = self else { return }
-                    let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                    
-                    self.present(alert, animated: true)
+extension FeaturedFeedViewController {
+    func bindToViewModel() {
+        self.viewModel.state.bindAndFire { [weak self] state in
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                switch state {
+                case .idle:
+                    break
+                case .loading:
+                    self.setLoadingViewHidden(false)
+                    self.setProgressBarHidden(true)
+                case .success:
+                    self.setLoadingViewHidden(true)
+                    self.tableView.setContentOffset(.zero, animated: true)
+                    self.tableView.reloadData()
+                    self.setProgressBarHidden(false)
+                case .error(let error):
+                    self.setProgressBarHidden(true)
+                    self.setLoadingViewHidden(true)
+                    DispatchQueue.main.async { [weak self]  in
+                        guard let self = self else { return }
+                        let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                        
+                        self.present(alert, animated: true)
+                    }
                 }
             }
         }

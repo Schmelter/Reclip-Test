@@ -7,17 +7,12 @@ import Foundation
 import AVKit
 
 final class FeaturedFeedViewModel {
-    weak var delegate: RequestDelegate?
-    private var state: ViewState {
-        didSet {
-            self.delegate?.didUpdate(with: state)
-        }
-    }
+    var state: Dynamic<ViewState>
     
     private var featuredFeeds: [FeaturedFeedModel] = []
     
     init() {
-        self.state = .idle
+        self.state = Dynamic<ViewState>(.idle)
     }
 }
 
@@ -27,25 +22,26 @@ extension FeaturedFeedViewModel {
         featuredFeeds.count
     }
 
-    func getInfo(for indexPath: IndexPath) -> (videoTitle: String, videoUrl: String, videoProgress: CMTime) {
+    func getCellViewModel(for indexPath: IndexPath) -> FeaturedFeedCellViewModel {
         let featuredFeed = featuredFeeds[indexPath.row]
         // Returned a paired down tuple with just the info the View is interested in
-        return (videoTitle: featuredFeed.share.videoTitle, videoUrl: featuredFeed.share.videoUrl, featuredFeed.share.videoProgress)
+        return FeaturedFeedCellViewModel(
+            videoTitle: featuredFeed.share.videoTitle, videoUrl: featuredFeed.share.videoUrl, videoProgress: featuredFeed.share.videoProgress)
     }
 }
 
 // MARK: - Service
 extension FeaturedFeedViewModel {
     func loadData() {
-        self.state = .loading
+        self.state.value = .loading
         FeaturedFeedAPI.getAllFeaturedFeeds { result in
             switch result {
             case let .success(featuredFeeds):
                 self.featuredFeeds = featuredFeeds
-                self.state = .success
+                self.state.value = .success
             case let .failure(error):
                 self.featuredFeeds = []
-                self.state = .error(error)
+                self.state.value = .error(error)
             }
         }
     }

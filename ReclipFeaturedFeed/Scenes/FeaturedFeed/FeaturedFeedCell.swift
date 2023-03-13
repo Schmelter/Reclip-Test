@@ -84,8 +84,8 @@ extension FeaturedFeedCell {
 
 // MARK: - Configure
 extension FeaturedFeedCell {
-    func configure(info: (videoTitle: String, videoUrl: String, videoProgress: CMTime)) {
-        guard let videoURL = URL(string: info.videoUrl) else { return }
+    func bindToViewModel(viewModel: FeaturedFeedCellViewModel) {
+        guard let videoURL = URL(string: viewModel.videoUrl) else { return }
         
         if contentView.subviews.count == 0 {
             // Needs to be configured
@@ -98,9 +98,9 @@ extension FeaturedFeedCell {
         }
         let timeScale = CMTimeScale(NSEC_PER_SEC)
         
-        self.titleLabel.text = info.videoTitle
+        self.titleLabel.text = viewModel.videoTitle
         controller.player?.replaceCurrentItem(with: AVPlayerItem(url: videoURL))
-        controller.player?.seek(to: info.videoProgress, toleranceBefore: CMTime(value: 0, timescale: timeScale), toleranceAfter: CMTime(value: 0, timescale: timeScale))
+        controller.player?.seek(to: viewModel.videoProgress.value, toleranceBefore: CMTime(value: 0, timescale: timeScale), toleranceAfter: CMTime(value: 0, timescale: timeScale))
         
         let time = CMTime(seconds: 0.1, preferredTimescale: timeScale)
         controller.player?.addPeriodicTimeObserver(forInterval: time, queue: .main, using: { [weak self] videoProgress in
