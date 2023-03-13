@@ -42,13 +42,13 @@ class FeaturedFeedAPI {
             }
 
             do {
-                var feedResponse = try self.jsonDecoder.decode([FeaturedFeedModelImpl].self, from: data)
+                var feedResponse = try self.jsonDecoder.decode([FeaturedFeedModel].self, from: data)
                 // Filter out duplicate entries based on id by turning them into a Dictionary
                 // based on the id
                 var feedIds = Set(feedResponse.map({ featuredFeedModel in
                     return featuredFeedModel.id
                 }))
-                feedResponse = feedResponse.reduce(into: [ FeaturedFeedModelImpl]()) { partialResult, featuredFeedModel in
+                feedResponse = feedResponse.reduce(into: [ FeaturedFeedModel]()) { partialResult, featuredFeedModel in
                     if feedIds.contains(featuredFeedModel.id) {
                         feedIds.remove(featuredFeedModel.id)
                         partialResult.append(featuredFeedModel)
@@ -58,7 +58,7 @@ class FeaturedFeedAPI {
                 // Inject the progress, if we have them
                 feedResponse = feedResponse.map { featuredFeedModel in
                     let videoProgress = UserDefaults.standard.float(forKey: featuredFeedModel.id)
-                    return FeaturedFeedModelImpl(featuredFeedModel: featuredFeedModel, videoProgress: videoProgress)
+                    return FeaturedFeedModel(featuredFeedModel: featuredFeedModel, videoProgress: videoProgress)
                 }
                 completion(.success(feedResponse))
             } catch let DecodingError.dataCorrupted(context) {

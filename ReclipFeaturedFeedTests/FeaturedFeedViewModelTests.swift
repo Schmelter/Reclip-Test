@@ -7,44 +7,36 @@ import XCTest
 @testable import ReclipFeaturedFeed
 
 class FeaturedFeedViewModelTests: XCTestCase {
-
-    let cellViewModel = FeaturedFeedCellViewModel(
-        videoId: "videoId",
-        videoTitle: "videoTitle",
-        videoUrl: "videoUrl",
-        videoProgress: 0.5
-    )
-    let shareModel = ShareModel()
     
-    let shareModel = ShareModel(
-        id: "id",
-        reclipId: "reclipId",
-        code: "code",
-        userId: "userId",
-        username: "username",
-        videoTitle: "videoTitle",
-        videoFilename: "videoFilename",
-        videoUrl: "videoUrl",
-        url: "url",
-        createdAt: nil,
-        endedAt: nil,
-        disabled: false,
-        videoProgress: 0.5
-    )
-
-    let featuredFeedModel = FeaturedFeedModel(
-        id: "id",
-        share: shareModel,
-        createdBy: "createdBy",
-        createdAt: nil
-    )
+    var shareModel: ShareModel?
+    var featuredFeedModel: FeaturedFeedModel?
     
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        shareModel = ShareModel(
+            id: "id",
+            reclipId: "reclipId",
+            code: "code",
+            userId: "userId",
+            username: "username",
+            videoTitle: "videoTitle",
+            videoFilename: "videoFilename",
+            videoUrl: "videoUrl",
+            url: "url",
+            createdAt: nil,
+            endedAt: nil,
+            disabled: false,
+            videoProgress: 0.5
+        )
+        featuredFeedModel = FeaturedFeedModel(
+            id: "id",
+            share: shareModel!,
+            createdBy: "createdBy",
+            createdAt: nil
+        )
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        
     }
 
     func testSuccessfulCallToApiNoData() throws {
@@ -81,11 +73,11 @@ class FeaturedFeedViewModelTests: XCTestCase {
     func testSuccessfulCallToApiWithData() throws {
         let api = FeaturedFeedAPIMock()
         api.getAllResult = .success([
-            cellViewModel,
-            cellViewModel,
-            cellViewModel,
-            cellViewModel,
-            cellViewModel])
+            featuredFeedModel!,
+            featuredFeedModel!,
+            featuredFeedModel!,
+            featuredFeedModel!,
+            featuredFeedModel!])
         
         let viewModel = FeaturedFeedViewModel(featuredFeedApi: api)
         
