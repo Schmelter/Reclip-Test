@@ -69,3 +69,4 @@ Once your PR's been opened, we'll review your code and schedule a call to discus
 # Notes
 
 > This is your space to add any info that you'd like us to know about your solution.
+Unfortunately, I missed one of the requirements, and noticed it to late.  Scrubbing the progress bar does not change the progress of the video.  I could fix it, but it would take an hour or so, and I've run out of time.  Just need to get the VideoProgress Dynamic to be bi-directional, so that changes to the progress bar can propogate to the FeatureFeedCellViewModel and into the FeaturedFeedCell.
